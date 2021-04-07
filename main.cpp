@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <QGraphicsPixmapItem>
 #include <QTimer>
+#include "jerry.h"
 
 int main(int argc, char *argv[])
 {
@@ -43,6 +44,9 @@ int main(int argc, char *argv[])
             // Add to the Scene
             scene.addItem(&boardImages[i][j]);
         }
+
+    Jerry j(6,6,boardData);
+    scene.addItem(&j);
 
     view.setScene(&scene);
     view.show();
