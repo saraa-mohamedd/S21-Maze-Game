@@ -49,6 +49,14 @@ int main(int argc, char *argv[])
 
     Jerry j(6,6,boardData);
     scene.addItem(&j);
+    j.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
+    j.setFocus();
+    QTimer timer;
+     timer.start(70);
+     timer.connect(&timer, SIGNAL(timeout()), &j, SLOT(move()));
+
+
+
 
     Cheese c1(1, 1);
     Cheese c2(1, 11);

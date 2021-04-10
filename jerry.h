@@ -21,6 +21,9 @@ public:
     void setColumn(int newColumn);
     int getColumn();
 public slots:
+    void keyPressEvent(QKeyEvent* event);
+    void move();
+
 };
 
 #endif // JERRY_H
