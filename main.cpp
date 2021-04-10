@@ -1,4 +1,4 @@
-    #include <QApplication>
+#include <QApplication>
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QFile>
@@ -7,6 +7,7 @@
 #include <QTimer>
 #include "jerry.h"
 #include "cheese.h"
+#include "pellets.h"
 
 int main(int argc, char *argv[])
 {
@@ -53,11 +54,15 @@ int main(int argc, char *argv[])
     Cheese c2(1, 11);
     Cheese c3(11, 1);
     Cheese c4(11, 11);
-
     scene.addItem(&c1);
     scene.addItem(&c2);
     scene.addItem(&c3);
     scene.addItem(&c4);
+
+    Pellets p1(1, 4);
+    Pellets p2(9, 9);
+    scene.addItem(&p1);
+    scene.addItem(&p2);
 
     view.setScene(&scene);
     view.show();
