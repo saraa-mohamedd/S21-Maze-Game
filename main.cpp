@@ -47,16 +47,6 @@ int main(int argc, char *argv[])
             scene.addItem(&boardImages[i][j]);
         }
 
-    Jerry j(6,6,boardData);
-    scene.addItem(&j);
-    j.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
-    j.setFocus();
-    QTimer timer;
-     timer.start(70);
-     timer.connect(&timer, SIGNAL(timeout()), &j, SLOT(move()));
-
-
-
 
     Cheese c1(1, 1);
     Cheese c2(1, 11);
@@ -71,6 +61,14 @@ int main(int argc, char *argv[])
     Pellets p2(9, 9);
     scene.addItem(&p1);
     scene.addItem(&p2);
+
+    Jerry j(6,6,boardData);
+    scene.addItem(&j);
+    j.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
+    j.setFocus();
+    QTimer timer;
+    timer.start(70);
+    timer.connect(&timer, SIGNAL(timeout()), &j, SLOT(move()));
 
     view.setScene(&scene);
     view.show();

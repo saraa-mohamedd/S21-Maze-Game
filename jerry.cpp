@@ -14,6 +14,10 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13])
     setPos(50 + 50 * initialColumn, 50 + 50 * initialRow);
     row = initialRow;
     column = initialColumn;
+
+    lives = 3;
+    holdingCheese = false;
+    invincibleMode = false;
 }
 void Jerry::setRow(int newRow)
 {
@@ -73,5 +77,53 @@ void Jerry::move()
     }
     setPos(50 + 50 * column, 50 + 50 * row);
 
-}
+    QList<QGraphicsItem*> items = collidingItems();
+    for (int i = 0; i < items.size(); i++)
+      {
+          if (typeid(*(items[i])) == typeid(Cheese))
+          {
+             if (holdingCheese)
+                break;
+              else
+              {
+                holdingCheese = true;
+                scene()->removeItem(items[i]);
+                QPixmap image("jerry cheese.png");
+                image = image.scaledToWidth(50);
+                image = image.scaledToHeight(50);
+                setPixmap(image);
+              }
+          }
+      }
 
+    if (((row == 5 && column == 6) || (row == 7 && column == 6) || (row == 6 && column == 5) || (row == 6 && column == 7))
+        && holdingCheese)
+    {
+        QPixmap image("jerry.png");
+        image = image.scaledToWidth(50);
+        image = image.scaledToHeight(50);
+        setPixmap(image);
+        holdingCheese = false;
+        numCheeseinHome++;
+        if (numCheeseinHome == 1)
+        {
+           Cheese c(5,5);
+           scene()->addItem(&c);
+        }
+        else if (numCheeseinHome == 2)
+        {
+            Cheese c(5,7);
+            scene()->addItem(&c);
+        }
+        else if (numCheeseinHome == 3)
+        {
+            Cheese c(7,5);
+            scene()->addItem(&c);
+        }
+        else
+        {
+            Cheese c(7,7);
+            scene()->addItem(&c);
+        }
+    }
+}
