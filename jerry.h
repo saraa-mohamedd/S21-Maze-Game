@@ -19,8 +19,10 @@ private:
     bool holdingCheese;
     bool invincibleMode;
     int numCheeseinHome;
+    QGraphicsScene* currentScene;
+    QGraphicsView* currentView;
 public:
-    Jerry(int initialRow, int initialColumn, int d[13][13]);
+    Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s, QGraphicsView* v);
     void setRow(int newRow);
     int getRow();
     void setColumn(int newColumn);

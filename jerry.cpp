@@ -1,6 +1,6 @@
 #include "jerry.h"
 
-Jerry::Jerry(int initialRow, int initialColumn, int d[13][13])
+Jerry::Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s, QGraphicsView* v)
 {
     for (int i = 0; i < 13; i++)
         for (int j = 0; j < 13; j++)
@@ -18,6 +18,8 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13])
     lives = 3;
     holdingCheese = false;
     invincibleMode = false;
+    currentScene = s;
+    currentView = v;
 }
 void Jerry::setRow(int newRow)
 {
@@ -97,7 +99,7 @@ void Jerry::move()
       }
 
     if (((row == 5 && column == 6) || (row == 7 && column == 6) || (row == 6 && column == 5) || (row == 6 && column == 7))
-        && holdingCheese)
+        && (holdingCheese))
     {
         QPixmap image("jerry.png");
         image = image.scaledToWidth(50);
@@ -108,22 +110,22 @@ void Jerry::move()
         if (numCheeseinHome == 1)
         {
            Cheese c(5,5);
-           scene()->addItem(&c);
+           currentScene->addItem(&c);
         }
         else if (numCheeseinHome == 2)
         {
             Cheese c(5,7);
-            scene()->addItem(&c);
+            currentScene->addItem(&c);
         }
         else if (numCheeseinHome == 3)
         {
             Cheese c(7,5);
-            scene()->addItem(&c);
+            currentScene->addItem(&c);
         }
         else
         {
             Cheese c(7,7);
-            scene()->addItem(&c);
+            currentScene->addItem(&c);
         }
     }
 }

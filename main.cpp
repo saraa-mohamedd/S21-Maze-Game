@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     scene.addItem(&p1);
     scene.addItem(&p2);
 
-    Jerry j(6,6,boardData);
+    Jerry j(6,6,boardData, &scene, &view);
     scene.addItem(&j);
     j.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     j.setFocus();
