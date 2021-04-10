@@ -6,6 +6,7 @@
 #include <QGraphicsPixmapItem>
 #include <QTimer>
 #include "jerry.h"
+#include "cheese.h"
 
 int main(int argc, char *argv[])
 {
@@ -47,6 +48,16 @@ int main(int argc, char *argv[])
 
     Jerry j(6,6,boardData);
     scene.addItem(&j);
+
+    Cheese c1(1, 1);
+    Cheese c2(1, 11);
+    Cheese c3(11, 1);
+    Cheese c4(11, 11);
+
+    scene.addItem(&c1);
+    scene.addItem(&c2);
+    scene.addItem(&c3);
+    scene.addItem(&c4);
 
     view.setScene(&scene);
     view.show();

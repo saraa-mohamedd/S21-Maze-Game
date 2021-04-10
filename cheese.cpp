@@ -2,7 +2,7 @@
 
 Cheese::Cheese(int initialRow, int initialColumn)
 {
-QPixmap image("");
+QPixmap image("cheese.png");
 image = image.scaledToWidth(50);
 image = image.scaledToHeight(50);
 setPixmap(image);
