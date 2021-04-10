@@ -11,11 +11,13 @@ CONFIG += c++11
 SOURCES += \
     cheese.cpp \
     jerry.cpp \
-    main.cpp
+    main.cpp \
+    pellets.cpp
 
 HEADERS += \
     cheese.h \
-    jerry.h
+    jerry.h \
+    pellets.h
 
 FORMS +=
 

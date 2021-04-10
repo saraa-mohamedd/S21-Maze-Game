@@ -1,6 +1,5 @@
 #ifndef CHEESE_H
 #define CHEESE_H
-#include<iostream>
 #include <QGraphicsPixmapItem>
 
 class Cheese : public QGraphicsPixmapItem
