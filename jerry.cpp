@@ -19,7 +19,7 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13])
     holdingCheese = false;
     invincibleMode = false;
     currentcheese = NULL;
-    Cheese h1;
+    numCheeseinHome = 0;
     h1.Adjustposition(5,5);
     h2.Adjustposition(5,7);
     h3.Adjustposition(7,5);
@@ -90,12 +90,14 @@ void Jerry::move()
     {
         if (typeid(*(items[i])) == typeid(Cheese))
         {
-            if (!((row==5&&column==5)||(row==5&&column==7)||(row==7&&column==5)||(row==7&&column==7)))
+            if ((row==5 && column==5)||(row==5 && column==7)||(row==7 && column==5)||(row==7 && column==7))
+            { break; }
+            else
             { cheeseCollision(items[i]); }
         }
     }
 
-    if (((row == 4 && column == 6) || (row == 8 && column == 6) || (row == 6 && column == 4) || (row == 6 && column == 8))
+    if (((row == 5 && column == 6) || (row == 7 && column == 6) || (row == 6 && column == 5) || (row == 6 && column == 7))
         && (holdingCheese))
     {
         cheeseBackHome();
@@ -142,4 +144,5 @@ void Jerry::cheeseBackHome()
         scene()->addItem(&h4);
     }
     holdingCheese = false;
+    currentcheese = NULL;
 }
