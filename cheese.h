@@ -5,6 +5,7 @@
 class Cheese : public QGraphicsPixmapItem
 {
 public:
+    Cheese();
     Cheese(int initialRow, int initialColumn);
     void Adjustposition(int row, int column);
 };
