@@ -91,14 +91,14 @@ void Jerry::move()
         if (typeid(*(items[i])) == typeid(Cheese))
         {
             if ((row==5 && column==5)||(row==5 && column==7)||(row==7 && column==5)||(row==7 && column==7))
-            { break; }
+            {}
             else
             { cheeseCollision(items[i]); }
         }
     }
 
     if (((row == 5 && column == 6) || (row == 7 && column == 6) || (row == 6 && column == 5) || (row == 6 && column == 7))
-        && (holdingCheese))
+        && (currentcheese != NULL))
     {
         cheeseBackHome();
     }
@@ -129,19 +129,27 @@ void Jerry::cheeseBackHome()
     numCheeseinHome++;
     if (numCheeseinHome == 1)
     {
-       scene()->addItem(&h1);
+        (*currentcheese).setPos(50 + 50 * 5, 50 + 50 * 5);
+        scene()->addItem(currentcheese);
+        //scene()->addItem(&h1);
     }
     else if (numCheeseinHome == 2)
     {
-        scene()->addItem(&h2);
+        (*currentcheese).setPos(50 + 50 * 7, 50 + 50 * 5);
+        scene()->addItem(currentcheese);
+        //scene()->addItem(&h2);
     }
     else if (numCheeseinHome == 3)
     {
-        scene()->addItem(&h3);
+        (*currentcheese).setPos(50 + 50 * 5, 50 + 50 * 7);
+        scene()->addItem(currentcheese);
+        //scene()->addItem(&h3);
     }
     else if (numCheeseinHome == 4)
     {
-        scene()->addItem(&h4);
+        (*currentcheese).setPos(50 + 50 * 7, 50 + 50 * 7);
+        scene()->addItem(currentcheese);
+        //scene()->addItem(&h4);
     }
     holdingCheese = false;
     currentcheese = NULL;
