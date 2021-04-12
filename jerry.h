@@ -6,7 +6,11 @@
 #include <QKeyEvent>
 #include <QList>
 #include <QGraphicsScene>
+#include <QTimer>
+#include <QTimerEvent>
+#include <QGraphicsTextItem>
 #include "cheese.h"
+#include "pellets.h"
 
 class Jerry : public QObject, public QGraphicsPixmapItem
 {
@@ -20,7 +24,9 @@ private:
     bool invincibleMode;
     int numCheeseinHome;
     QGraphicsItem* currentcheese;
-    Cheese h1, h2, h3, h4;
+    QGraphicsTextItem livesOnScreen;
+    QTimer timer;
+
 public:
     Jerry(int initialRow, int initialColumn, int d[13][13]);
     void setRow(int newRow);
@@ -32,6 +38,7 @@ public:
 public slots:
     void keyPressEvent(QKeyEvent* event);
     void move();
+    void pelletCollision();
 
 };
 

@@ -6,8 +6,6 @@
 #include <QGraphicsPixmapItem>
 #include <QTimer>
 #include "jerry.h"
-#include "cheese.h"
-#include "pellets.h"
 
 int main(int argc, char *argv[])
 {

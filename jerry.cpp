@@ -1,5 +1,5 @@
 #include "jerry.h"
-
+#include <QDebug>
 Jerry::Jerry(int initialRow, int initialColumn, int d[13][13])
 {
     for (int i = 0; i < 13; i++)
@@ -15,15 +15,19 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13])
     row = initialRow;
     column = initialColumn;
 
+/*
+    livesOnScreen.setPlainText("lives: 3");
+    livesOnScreen.setDefaultTextColor(QColor(0, 1, 0, 225));
+    livesOnScreen.setX(200);
+    livesOnScreen.setY(200);
+    scene()->addItem(&livesOnScreen);
+*/
+
     lives = 3;
     holdingCheese = false;
     invincibleMode = false;
     currentcheese = NULL;
     numCheeseinHome = 0;
-    h1.Adjustposition(5,5);
-    h2.Adjustposition(5,7);
-    h3.Adjustposition(7,5);
-    h4.Adjustposition(7,7);
 }
 
 void Jerry::setRow(int newRow)
@@ -95,6 +99,18 @@ void Jerry::move()
             else
             { cheeseCollision(items[i]); }
         }
+        else if (typeid(*(items[i])) == typeid(Pellets))
+        {
+            timer.start(5000);
+            scene()->removeItem(items[i]);
+            QPixmap image("tom.png");
+            image = image.scaledToWidth(50);
+            image = image.scaledToHeight(50);
+            setPixmap(image);
+            invincibleMode = true;
+            timer.connect(&timer, SIGNAL(timeout()), this, SLOT(pelletCollision()));
+        }
+
     }
 
     if (((row == 5 && column == 6) || (row == 7 && column == 6) || (row == 6 && column == 5) || (row == 6 && column == 7))
@@ -131,26 +147,32 @@ void Jerry::cheeseBackHome()
     {
         (*currentcheese).setPos(50 + 50 * 5, 50 + 50 * 5);
         scene()->addItem(currentcheese);
-        //scene()->addItem(&h1);
     }
     else if (numCheeseinHome == 2)
     {
         (*currentcheese).setPos(50 + 50 * 7, 50 + 50 * 5);
         scene()->addItem(currentcheese);
-        //scene()->addItem(&h2);
     }
     else if (numCheeseinHome == 3)
     {
         (*currentcheese).setPos(50 + 50 * 5, 50 + 50 * 7);
         scene()->addItem(currentcheese);
-        //scene()->addItem(&h3);
     }
     else if (numCheeseinHome == 4)
     {
         (*currentcheese).setPos(50 + 50 * 7, 50 + 50 * 7);
         scene()->addItem(currentcheese);
-        //scene()->addItem(&h4);
     }
     holdingCheese = false;
     currentcheese = NULL;
+}
+
+void Jerry::pelletCollision()
+{
+    invincibleMode = false;
+    QPixmap image("jerry.png");
+    image = image.scaledToWidth(50);
+    image = image.scaledToHeight(50);
+    setPixmap(image);
+    return;
 }
