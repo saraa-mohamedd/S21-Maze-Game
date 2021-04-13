@@ -25,10 +25,11 @@ private:
     int numCheeseinHome;
     QGraphicsItem* currentcheese;
     QGraphicsTextItem livesOnScreen;
+    QGraphicsTextItem modeOnScreen;
     QTimer timer;
 
 public:
-    Jerry(int initialRow, int initialColumn, int d[13][13]);
+    Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s);
     void setRow(int newRow);
     int getRow();
     void setColumn(int newColumn);

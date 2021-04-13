@@ -1,6 +1,6 @@
 #include "jerry.h"
 #include <QDebug>
-Jerry::Jerry(int initialRow, int initialColumn, int d[13][13])
+Jerry::Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s)
 {
     for (int i = 0; i < 13; i++)
         for (int j = 0; j < 13; j++)
@@ -15,13 +15,27 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13])
     row = initialRow;
     column = initialColumn;
 
-/*
-    livesOnScreen.setPlainText("lives: 3");
-    livesOnScreen.setDefaultTextColor(QColor(0, 1, 0, 225));
-    livesOnScreen.setX(200);
-    livesOnScreen.setY(200);
-    scene()->addItem(&livesOnScreen);
-*/
+    QFont* f = new QFont;
+    f->setPointSize(15);
+    f->setBold(true);
+    livesOnScreen.setPlainText("LIVES: 3");
+    livesOnScreen.setDefaultTextColor(QColor(255, 255, 255, 225));
+    livesOnScreen.setX(50);
+    livesOnScreen.setY(15);
+    livesOnScreen.setFont(*f);
+    livesOnScreen.adjustSize();
+
+    modeOnScreen.setPlainText("MODE: REGULAR");
+    modeOnScreen.setDefaultTextColor(QColor(255, 255, 0, 225));
+    modeOnScreen.setX(550);
+    modeOnScreen.setY(15);
+    modeOnScreen.setFont(*f);
+    modeOnScreen.adjustSize();
+    // adjusting text on screen
+
+    s->addItem(&modeOnScreen);
+    s->addItem(&livesOnScreen);
+    // adding text to screen
 
     lives = 3;
     holdingCheese = false;
@@ -107,6 +121,9 @@ void Jerry::move()
             image = image.scaledToWidth(50);
             image = image.scaledToHeight(50);
             setPixmap(image);
+            modeOnScreen.setTextWidth(210);
+            modeOnScreen.setX(515);
+            modeOnScreen.setPlainText("MODE: INVINCIBLE");
             invincibleMode = true;
             timer.connect(&timer, SIGNAL(timeout()), this, SLOT(pelletCollision()));
         }
@@ -171,6 +188,9 @@ void Jerry::pelletCollision()
 {
     invincibleMode = false;
     QPixmap image("jerry.png");
+    modeOnScreen.setX(550);
+    modeOnScreen.setTextWidth(178);
+    modeOnScreen.setPlainText("MODE: REGULAR");
     image = image.scaledToWidth(50);
     image = image.scaledToHeight(50);
     setPixmap(image);
