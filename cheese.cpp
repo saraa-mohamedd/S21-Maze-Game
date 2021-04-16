@@ -2,7 +2,7 @@
 
 Cheese::Cheese()
 {
-    QPixmap image("cheese.png");
+    QPixmap image("/Users/layla/desktop/cheese.png");
     image = image.scaledToWidth(50);
     image = image.scaledToHeight(50);
     setPixmap(image);
@@ -10,7 +10,7 @@ Cheese::Cheese()
 
 Cheese::Cheese(int initialRow, int initialColumn)
 {
-    QPixmap image("cheese.png");
+    QPixmap image("/Users/layla/desktop/cheese.png");
     image = image.scaledToWidth(50);
     image = image.scaledToHeight(50);
     setPixmap(image);

@@ -2,7 +2,7 @@
 
 Pellets::Pellets(int initialRow, int initialColumn)
 {
-QPixmap image("powerup.png");
+QPixmap image("/Users/layla/desktop/powerup.png");
 image = image.scaledToWidth(50);
 image = image.scaledToHeight(50);
 setPixmap(image);

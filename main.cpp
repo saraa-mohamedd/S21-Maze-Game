@@ -6,6 +6,7 @@
 #include <QGraphicsPixmapItem>
 #include <QTimer>
 #include "jerry.h"
+#include "tom.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,18 +19,26 @@ int main(int argc, char *argv[])
     view.setBackgroundBrush(QBrush(Qt::black));
 
     int boardData[13][13];
-    QFile file("board.txt");
+    QFile file("/Users/layla/desktop/board.txt");
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     for (int i = 0; i < 13; i++)
         for (int j = 0; j < 13; j++)
             stream >> boardData[i][j];
 
-    QPixmap wallImage("wall.jpg"), floorImage("floor.jpg");
+    QPixmap wallImage("/Users/layla/desktop/wall.jpg"), floorImage("/Users/layla/desktop/floor.jpg"), rug1("/Users/layla/desktop/homee1.png"), rug2("/Users/layla/desktop/homee2.png"), rug3("/Users/layla/desktop/homee3.png"),plate("/Users/layla/desktop/platee.png");
     wallImage = wallImage.scaledToWidth(50);
     wallImage = wallImage.scaledToHeight(50);
     floorImage = floorImage.scaledToWidth(50);
     floorImage = floorImage.scaledToHeight(50);
+    rug1 = rug1.scaledToWidth(75);
+    rug1 = rug1.scaledToHeight(57);
+    rug2 = rug2.scaledToWidth(75);
+    rug2 = rug2.scaledToHeight(55);
+    rug3 = rug3.scaledToWidth(75);
+    rug3 = rug3.scaledToHeight(57);
+    plate= plate.scaledToWidth(50);
+    plate= plate.scaledToHeight(55);
     QGraphicsPixmapItem boardImages[13][13];
     for (int i = 0; i < 13; i++)
         for (int j = 0; j < 13; j++)
@@ -37,6 +46,14 @@ int main(int argc, char *argv[])
             // Set Image
             if (boardData[i][j] == -1)
                 boardImages[i][j].setPixmap(wallImage);
+            else if (boardData[i][j] == 37)
+                boardImages[i][j].setPixmap(rug1);
+            else if (boardData[i][j] == 38)
+                boardImages[i][j].setPixmap(rug2);
+            else if (boardData[i][j] == 39)
+                boardImages[i][j].setPixmap(rug3);
+            else if (boardData[i][j] == 28 || boardData[i][j] == 45 || boardData[i][j] == 47 ||  boardData[i][j] == 30)
+                boardImages[i][j].setPixmap(plate);
             else
                 boardImages[i][j].setPixmap(floorImage);
             // Set Position
@@ -61,12 +78,17 @@ int main(int argc, char *argv[])
     scene.addItem(&p2);
 
     Jerry j(6,6,boardData, &scene);
+    tom t(boardData);
     scene.addItem(&j);
+    scene.addItem(&t);
     j.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     j.setFocus();
     QTimer timer;
     timer.start(70);
     timer.connect(&timer, SIGNAL(timeout()), &j, SLOT(move()));
+    QTimer ttimer;
+    ttimer.start(8000);
+    ttimer.connect(&timer, SIGNAL(timeout()), &t, SLOT(chase()));
 
     view.setScene(&scene);
     view.show();

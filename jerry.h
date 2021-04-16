@@ -11,6 +11,7 @@
 #include <QGraphicsTextItem>
 #include "cheese.h"
 #include "pellets.h"
+#include "tom.h"
 
 class Jerry : public QObject, public QGraphicsPixmapItem
 {
@@ -19,9 +20,10 @@ private:
     char direction;
     int row, column;
     int data[13][13];
-    int lives;
+    int lives=3;
     bool holdingCheese;
     bool invincibleMode;
+    bool caught;
     int numCheeseinHome;
     QGraphicsItem* currentcheese;
     QGraphicsTextItem livesOnScreen;
@@ -36,10 +38,12 @@ public:
     int getColumn();
     void cheeseCollision(QGraphicsItem* c);
     void cheeseBackHome();
+    int livescounter();
 public slots:
     void keyPressEvent(QKeyEvent* event);
     void move();
     void pelletCollision();
+    void tomCollision();
 
 };
 

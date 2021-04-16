@@ -6,9 +6,9 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s
         for (int j = 0; j < 13; j++)
             data[i][j] = d[i][j];
     // Set Image
-    QPixmap image("jerry.png");
-    image = image.scaledToWidth(50);
-    image = image.scaledToHeight(50);
+    QPixmap image("/Users/layla/desktop/jerry.png");
+    image = image.scaledToWidth(45);
+    image = image.scaledToHeight(45);
     setPixmap(image);
     // Set Position
     setPos(50 + 50 * initialColumn, 50 + 50 * initialRow);
@@ -18,7 +18,7 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s
     QFont* f = new QFont;
     f->setPointSize(15);
     f->setBold(true);
-    livesOnScreen.setPlainText("LIVES: 3");
+    livescounter();
     livesOnScreen.setDefaultTextColor(QColor(255, 255, 255, 225));
     livesOnScreen.setX(50);
     livesOnScreen.setY(15);
@@ -36,8 +36,6 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s
     s->addItem(&modeOnScreen);
     s->addItem(&livesOnScreen);
     // adding text to screen
-
-    lives = 3;
     holdingCheese = false;
     invincibleMode = false;
     currentcheese = NULL;
@@ -77,6 +75,7 @@ void Jerry::keyPressEvent(QKeyEvent* event)
     else if (event->key() == Qt::Key_Right)
     {
         direction = 'r';
+
     }
     else if (event->key() == Qt::Key_Left)
     {
@@ -96,10 +95,70 @@ void Jerry::move()
     else if (direction == 'r' && data[row][column + 1] != -1)
     {
         column++;
+        if(!holdingCheese && !invincibleMode)
+        {
+        QPixmap image("/Users/layla/desktop/jerry.png");
+        image = image.scaledToWidth(45);
+        image = image.scaledToHeight(45);
+        setPixmap(image);
+        }
+        else if(holdingCheese && !invincibleMode)
+        {
+            QPixmap image("/Users/layla/desktop/jerry cheese.png");
+            image = image.scaledToWidth(55);
+            image = image.scaledToHeight(55);
+            QPixmap reflectedimage = image.transformed(QTransform().scale(-1, 1));
+            setPixmap(reflectedimage);
+         }
+        else if(invincibleMode && !holdingCheese)
+        {
+            QPixmap image("/Users/layla/desktop/jerry trans.png");
+            image = image.scaledToWidth(45);
+            image = image.scaledToHeight(45);
+            setPixmap(image);
+         }
+        else if(invincibleMode && holdingCheese)
+        {
+            QPixmap image("/Users/layla/desktop/jerry cheese trans.png");
+            image = image.scaledToWidth(55);
+            image = image.scaledToHeight(55);
+            QPixmap reflectedimage = image.transformed(QTransform().scale(-1, 1));
+            setPixmap(reflectedimage);
+         }
     }
     else if (direction == 'l' && data[row][column - 1] != -1)
     {
         column--;
+        if(!holdingCheese && !invincibleMode)
+         {
+        QPixmap image("/Users/layla/desktop/jerry.png");
+        image = image.scaledToWidth(45);
+        image = image.scaledToHeight(45);
+        QPixmap reflectedimage = image.transformed(QTransform().scale(-1, 1));
+        setPixmap(reflectedimage);
+        }
+        else if(holdingCheese && !invincibleMode)
+        {
+            QPixmap image("/Users/layla/desktop/jerry cheese.png");
+            image = image.scaledToWidth(55);
+            image = image.scaledToHeight(55);
+            setPixmap(image);
+        }
+        else if(invincibleMode && !holdingCheese)
+        {
+            QPixmap image("/Users/layla/desktop/jerry trans.png");
+            image = image.scaledToWidth(45);
+            image = image.scaledToHeight(45);
+            QPixmap reflectedimage = image.transformed(QTransform().scale(-1, 1));
+            setPixmap(reflectedimage);
+        }
+        else if(invincibleMode && holdingCheese)
+        {
+            QPixmap image("/Users/layla/desktop/jerry cheese trans.png");
+            image = image.scaledToWidth(55);
+            image = image.scaledToHeight(55);
+            setPixmap(image);
+        }
     }
     setPos(50 + 50 * column, 50 + 50 * row);
 
@@ -117,15 +176,37 @@ void Jerry::move()
         {
             timer.start(5000);
             scene()->removeItem(items[i]);
-            QPixmap image("tom.png");
-            image = image.scaledToWidth(50);
-            image = image.scaledToHeight(50);
+            if(!holdingCheese)
+            {
+            QPixmap image("/Users/layla/desktop/jerry trans.png");
+            image = image.scaledToWidth(45);
+            image = image.scaledToHeight(45);
             setPixmap(image);
+            }
+            else
+            {
+                QPixmap image("/Users/layla/desktop/jerry cheese trans.png");
+                image = image.scaledToWidth(55);
+                image = image.scaledToHeight(55);
+                setPixmap(image);
+            }
             modeOnScreen.setTextWidth(210);
             modeOnScreen.setX(515);
             modeOnScreen.setPlainText("MODE: INVINCIBLE");
             invincibleMode = true;
             timer.connect(&timer, SIGNAL(timeout()), this, SLOT(pelletCollision()));
+        }
+         else if (typeid(*(items[i])) == typeid(tom))
+        {
+            if(!invincibleMode)
+            {
+            QPixmap image("/Users/layla/desktop/tomcaught.png");
+            image = image.scaledToWidth(50);
+            image = image.scaledToHeight(50);
+            setPixmap(image);
+            caught = true;
+            tomCollision();
+            }
         }
 
     }
@@ -146,18 +227,28 @@ void Jerry::cheeseCollision(QGraphicsItem* c)
        holdingCheese = true;
        currentcheese = c;
        scene()->removeItem(c);
-       QPixmap image("jerry cheese.png");
-       image = image.scaledToWidth(50);
-       image = image.scaledToHeight(50);
+       if(!invincibleMode)
+       {
+       QPixmap image("/Users/layla/desktop/jerry cheese.png");
+       image = image.scaledToWidth(55);
+       image = image.scaledToHeight(55);
        setPixmap(image);
+       }
+       else
+       {
+           QPixmap image("/Users/layla/desktop/jerry cheese trans.png");
+           image = image.scaledToWidth(55);
+           image = image.scaledToHeight(55);
+           setPixmap(image);
+       }
      }
 }
 
 void Jerry::cheeseBackHome()
 {
-    QPixmap image("jerry.png");
-    image = image.scaledToWidth(50);
-    image = image.scaledToHeight(50);
+    QPixmap image("/Users/layla/desktop/jerry.png");
+    image = image.scaledToWidth(45);
+    image = image.scaledToHeight(45);
     setPixmap(image);
     numCheeseinHome++;
     if (numCheeseinHome == 1)
@@ -187,12 +278,50 @@ void Jerry::cheeseBackHome()
 void Jerry::pelletCollision()
 {
     invincibleMode = false;
-    QPixmap image("jerry.png");
+    QPixmap image("/Users/layla/desktop/jerry.png");
     modeOnScreen.setX(550);
     modeOnScreen.setTextWidth(178);
     modeOnScreen.setPlainText("MODE: REGULAR");
-    image = image.scaledToWidth(50);
-    image = image.scaledToHeight(50);
+    image = image.scaledToWidth(45);
+    image = image.scaledToHeight(45);
     setPixmap(image);
     return;
+}
+void Jerry::tomCollision()
+{
+    int initialrow = 6, initialcolumn = 6;
+    if(caught)
+    {
+        if(holdingCheese)
+        {
+            //return cheese to starting point
+
+        }
+        //return jerry to home
+        QPixmap image("/Users/layla/desktop/jerry.png");
+        image = image.scaledToWidth(45);
+        image = image.scaledToHeight(45);
+        setPixmap(image);
+        // Set Position
+        setPos(50 + 50 * initialrow, 50 + 50 * initialcolumn);
+        row = initialrow;
+        column = initialcolumn;
+        lives--;
+        livescounter();
+    }
+}
+int Jerry::livescounter()
+{
+    if (lives==3)
+    livesOnScreen.setPlainText("LIVES: 3");
+    else if(lives==2)
+    livesOnScreen.setPlainText("LIVES: 2");
+    else if(lives==1)
+    livesOnScreen.setPlainText("LIVES: 1");
+    else if(lives==0)
+    {
+        livesOnScreen.setPlainText(" ");
+    //end game + game over screen
+    }
+    return lives;
 }
