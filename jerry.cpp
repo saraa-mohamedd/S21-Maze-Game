@@ -321,10 +321,6 @@ void Jerry::livescounter()
     {
         livesOnScreen.setPlainText("LIVES: 0");
         gameover();
-
-
-
-
     //end game + game over screen
     }
 }
@@ -377,10 +373,9 @@ void Jerry::victory()
     jerryWonOnScreen.setTextWidth(580);
     jerryWonOnScreen.setDefaultTextColor(QColor(Qt::blue));
     jerryWonOnScreen.setX(120);
-    jerryWonOnScreen.setY(300);
+    jerryWonOnScreen.setY(450);
     jerryWonOnScreen.setFont(*f);
     jerryWonOnScreen.adjustSize();
     scene()->addItem(&jerryWonOnScreen);
-     scene()->removeItem(Tom);
-
+    scene()->removeItem(Tom);
 }
