@@ -19,14 +19,14 @@ int main(int argc, char *argv[])
     view.setBackgroundBrush(QBrush(Qt::black));
 
     int boardData[13][13];
-    QFile file("/Users/layla/desktop/board.txt");
+    QFile file("board.txt");
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     for (int i = 0; i < 13; i++)
         for (int j = 0; j < 13; j++)
             stream >> boardData[i][j];
 
-    QPixmap wallImage("/Users/layla/desktop/wall.jpg"), floorImage("/Users/layla/desktop/floor.jpg"), rug1("/Users/layla/desktop/homee1.png"), rug2("/Users/layla/desktop/homee2.png"), rug3("/Users/layla/desktop/homee3.png"),plate("/Users/layla/desktop/platee.png");
+    QPixmap wallImage("wall.jpg"), floorImage("floor.jpeg"), rug1("homee1.png"), rug2("homee2.png"), rug3("homee3.png"),plate("platee.png");
     wallImage = wallImage.scaledToWidth(50);
     wallImage = wallImage.scaledToHeight(50);
     floorImage = floorImage.scaledToWidth(50);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     rug3 = rug3.scaledToWidth(75);
     rug3 = rug3.scaledToHeight(57);
     plate= plate.scaledToWidth(50);
-    plate= plate.scaledToHeight(55);
+    plate= plate.scaledToHeight(50);
     QGraphicsPixmapItem boardImages[13][13];
     for (int i = 0; i < 13; i++)
         for (int j = 0; j < 13; j++)

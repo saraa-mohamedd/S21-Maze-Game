@@ -23,13 +23,11 @@ private:
     int lives=3;
     bool holdingCheese;
     bool invincibleMode;
-    bool caught;
     int numCheeseinHome;
     QGraphicsItem* currentcheese;
     QGraphicsTextItem livesOnScreen;
     QGraphicsTextItem modeOnScreen;
     QTimer timer;
-
 public:
     Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s);
     void setRow(int newRow);
@@ -38,11 +36,12 @@ public:
     int getColumn();
     void cheeseCollision(QGraphicsItem* c);
     void cheeseBackHome();
-    int livescounter();
+    void livescounter();
+    void pelletCollision(QGraphicsItem* p);
 public slots:
     void keyPressEvent(QKeyEvent* event);
     void move();
-    void pelletCollision();
+    void pelletCollisionOver();
     void tomCollision();
 
 };
