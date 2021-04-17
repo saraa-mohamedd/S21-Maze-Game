@@ -25,6 +25,15 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s
     livesOnScreen.setFont(*f);
     livesOnScreen.adjustSize();
 
+    //jerryLostOnScreen.setPlainText("JERRY LOST");
+    //jerryLostOnScreen.setDefaultTextColor(QColor(Qt::red));
+    //jerryLostOnScreen.setX(300);
+    //jerryLostOnScreen.setY(15);
+    //jerryLostOnScreen.setFont(*f);
+    //jerryLostOnScreen.adjustSize();
+    //s->addItem(&jerryLostOnScreen);
+
+
     modeOnScreen.setPlainText("MODE: REGULAR");
     modeOnScreen.setDefaultTextColor(QColor(255, 255, 0, 225));
     modeOnScreen.setX(520);
@@ -35,6 +44,8 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s
 
     s->addItem(&modeOnScreen);
     s->addItem(&livesOnScreen);
+
+
     // adding text to screen
     holdingCheese = false;
     invincibleMode = false;
@@ -178,6 +189,7 @@ void Jerry::move()
         }
         else if (typeid(*(items[i])) == typeid(tom))
         {
+            Tom=items[i];
             tomCollision();
         }
     }
@@ -241,6 +253,8 @@ void Jerry::cheeseBackHome()
     {
         (*currentcheese).setPos(50 + 50 * 7, 50 + 50 * 7);
         scene()->addItem(currentcheese);
+        victory();
+
     }
     holdingCheese = false;
     currentcheese = NULL;
@@ -306,6 +320,11 @@ void Jerry::livescounter()
     else if(lives==0)
     {
         livesOnScreen.setPlainText("LIVES: 0");
+        gameover();
+
+
+
+
     //end game + game over screen
     }
 }
@@ -333,4 +352,35 @@ void Jerry::tomCollision()
         lives--;
         livescounter();
       }
+}
+void Jerry::gameover()
+{
+    QFont* f = new QFont;
+    f->setPointSize(80);
+    f->setBold(true);
+    jerryLostOnScreen.setPlainText("GAME OVER");
+    jerryLostOnScreen.setTextWidth(580);
+    jerryLostOnScreen.setDefaultTextColor(QColor(Qt::red));
+    jerryLostOnScreen.setX(50);
+    jerryLostOnScreen.setY(300);
+    jerryLostOnScreen.setFont(*f);
+    jerryLostOnScreen.adjustSize();
+    scene()->addItem(&jerryLostOnScreen);
+    scene()->removeItem(Tom);
+}
+void Jerry::victory()
+{
+    QFont* f = new QFont;
+    f->setPointSize(90);
+    f->setBold(true);
+    jerryWonOnScreen.setPlainText("VICTORY");
+    jerryWonOnScreen.setTextWidth(580);
+    jerryWonOnScreen.setDefaultTextColor(QColor(Qt::blue));
+    jerryWonOnScreen.setX(120);
+    jerryWonOnScreen.setY(300);
+    jerryWonOnScreen.setFont(*f);
+    jerryWonOnScreen.adjustSize();
+    scene()->addItem(&jerryWonOnScreen);
+     scene()->removeItem(Tom);
+
 }

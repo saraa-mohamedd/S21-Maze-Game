@@ -89,8 +89,8 @@ int main(int argc, char *argv[])
     QTimer ttimer;
     ttimer.start(8000);
     ttimer.connect(&timer, SIGNAL(timeout()), &t, SLOT(chase()));
-
     view.setScene(&scene);
     view.show();
+
     return a.exec();
 }

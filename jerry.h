@@ -27,6 +27,9 @@ private:
     QGraphicsItem* currentcheese;
     QGraphicsTextItem livesOnScreen;
     QGraphicsTextItem modeOnScreen;
+    QGraphicsTextItem jerryLostOnScreen;
+    QGraphicsTextItem jerryWonOnScreen;
+    QGraphicsItem* Tom;
     QTimer timer;
 public:
     Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s);
@@ -38,6 +41,8 @@ public:
     void cheeseBackHome();
     void livescounter();
     void pelletCollision(QGraphicsItem* p);
+    void gameover();
+    void victory();
 public slots:
     void keyPressEvent(QKeyEvent* event);
     void move();
