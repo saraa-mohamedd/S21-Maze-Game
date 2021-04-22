@@ -25,15 +25,6 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s
     livesOnScreen.setFont(*f);
     livesOnScreen.adjustSize();
 
-    //jerryLostOnScreen.setPlainText("JERRY LOST");
-    //jerryLostOnScreen.setDefaultTextColor(QColor(Qt::red));
-    //jerryLostOnScreen.setX(300);
-    //jerryLostOnScreen.setY(15);
-    //jerryLostOnScreen.setFont(*f);
-    //jerryLostOnScreen.adjustSize();
-    //s->addItem(&jerryLostOnScreen);
-
-
     modeOnScreen.setPlainText("MODE: REGULAR");
     modeOnScreen.setDefaultTextColor(QColor(255, 255, 0, 225));
     modeOnScreen.setX(520);
@@ -373,7 +364,7 @@ void Jerry::victory()
     jerryWonOnScreen.setTextWidth(580);
     jerryWonOnScreen.setDefaultTextColor(QColor(Qt::blue));
     jerryWonOnScreen.setX(120);
-    jerryWonOnScreen.setY(450);
+    jerryWonOnScreen.setY(300);
     jerryWonOnScreen.setFont(*f);
     jerryWonOnScreen.adjustSize();
     scene()->addItem(&jerryWonOnScreen);
