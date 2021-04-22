@@ -349,11 +349,17 @@ void Jerry::gameover()
     jerryLostOnScreen.setTextWidth(580);
     jerryLostOnScreen.setDefaultTextColor(QColor(Qt::red));
     jerryLostOnScreen.setX(50);
-    jerryLostOnScreen.setY(300);
+    jerryLostOnScreen.setY(450);
     jerryLostOnScreen.setFont(*f);
     jerryLostOnScreen.adjustSize();
     scene()->addItem(&jerryLostOnScreen);
     scene()->removeItem(Tom);
+
+    QImage losingpic("tomcaught.png");
+    QGraphicsPixmapItem* image = new QGraphicsPixmapItem(QPixmap::fromImage(losingpic));
+    image->setScale(0.17);
+    image->setPos(135,135);
+    scene()->addItem(image);
 }
 void Jerry::victory()
 {
@@ -361,12 +367,18 @@ void Jerry::victory()
     f->setPointSize(90);
     f->setBold(true);
     jerryWonOnScreen.setPlainText("VICTORY");
-    jerryWonOnScreen.setTextWidth(580);
+    jerryWonOnScreen.setTextWidth(600);
     jerryWonOnScreen.setDefaultTextColor(QColor(Qt::blue));
     jerryWonOnScreen.setX(120);
-    jerryWonOnScreen.setY(300);
+    jerryWonOnScreen.setY(350);
     jerryWonOnScreen.setFont(*f);
     jerryWonOnScreen.adjustSize();
     scene()->addItem(&jerryWonOnScreen);
     scene()->removeItem(Tom);
+
+    QImage losingpic("victorypic.png");
+    QGraphicsPixmapItem* image = new QGraphicsPixmapItem(QPixmap::fromImage(losingpic));
+    image->setScale(0.17);
+    image->setPos(300,135);
+    scene()->addItem(image);
 }
