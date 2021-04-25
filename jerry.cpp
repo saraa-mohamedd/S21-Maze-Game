@@ -320,6 +320,14 @@ void Jerry::tomCollision()
 {
     if(!invincibleMode)
     {
+        //return jerry to home
+        // Set Position
+        row = 6;
+        column = 6;
+        direction = ' ';
+        setPos(50 + 50 * row, 50 + 50 * column);
+        lives--;
+        livescounter();
         if(holdingCheese)
         {
             scene()->addItem(currentcheese);
@@ -330,14 +338,7 @@ void Jerry::tomCollision()
             image = image.scaledToHeight(45);
             setPixmap(image);
         }
-        //return jerry to home
-        // Set Position
-        row = 6;
-        column = 6;
-        direction = ' ';
-        setPos(50 + 50 * row, 50 + 50 * column);
-        lives--;
-        livescounter();
+
       }
 }
 void Jerry::gameover()
