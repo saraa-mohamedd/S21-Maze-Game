@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
         for (int j = 0; j < 13; j++)
             stream >> boardData[i][j];
 
-    QPixmap wallImage("wall.jpg"), floorImage("floor.jpeg"), rug1("homee1.png"), rug2("homee2.png"), rug3("homee3.png"),plate("platee.png");
+    QPixmap wallImage("wall.jpg"), floorImage("floor.jpeg"), rug1("homee1.png"), rug2("homee2.png"), rug3("homee3.png"),plate("plate.jpg");
     wallImage = wallImage.scaledToWidth(50);
     wallImage = wallImage.scaledToHeight(50);
     floorImage = floorImage.scaledToWidth(50);

@@ -14,8 +14,8 @@ tom::tom(int d[13][13])
 
 
     QPixmap image("tom.png");
-    image= image.scaledToWidth(55);
-    image = image.scaledToHeight(55);
+    image= image.scaledToWidth(50);
+    image = image.scaledToHeight(50);
     setPixmap(image);
     setPos(50 + 50 * initialRow, 50 + 50 * initialColumn);
     row = initialRow;
@@ -26,7 +26,7 @@ void tom::chase()
 {
     int randomdirection;
     randomdirection = rand()%4;
-    if (randomdirection == 0 && data[row - 1][column] != -1 && data[row - 1][column] != 52)
+    if (randomdirection == 0 && data[row - 1][column] != -1 && data[row - 1][column] != 53)
     {
         row--;
     }
