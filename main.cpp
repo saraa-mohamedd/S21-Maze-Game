@@ -69,25 +69,27 @@ int main(int argc, char *argv[])
     Cheese c4(11, 11);
     scene.addItem(&c1);
     scene.addItem(&c2);
-    scene.addItem(&c3);
-    scene.addItem(&c4);
+    scene.addItem(&c3);                             //creating four cheese objects and adding them to the scene
+    scene.addItem(&c4);                             //in the four corners of the maze
 
     Pellets p1(1, 4);
     Pellets p2(9, 9);
-    scene.addItem(&p1);
-    scene.addItem(&p2);
+    scene.addItem(&p1);                             //initializing pellets and adding to scene
+    scene.addItem(&p2);                             //in chosen positions
 
     Jerry j(6,6,boardData, &scene);
     tom t(boardData);
     scene.addItem(&j);
-    scene.addItem(&t);
+    scene.addItem(&t);                              //adding jerry and tom to scene
+
     j.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     j.setFocus();
     QTimer timer;
-    timer.start(70);
+    timer.start(70);                                //adjusting and setting timer for jerry's motion
     timer.connect(&timer, SIGNAL(timeout()), &j, SLOT(move()));
+
     QTimer ttimer;
-    ttimer.start(8000);
+    ttimer.start(8000);                             //adjusting and starting timer for tom's motion
     ttimer.connect(&timer, SIGNAL(timeout()), &t, SLOT(chase()));
     view.setScene(&scene);
     view.show();

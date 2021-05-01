@@ -10,13 +10,13 @@ tom::tom(int d[13][13])
             data[i][j] = d[i][j];
          }
     initialRow = 11;
-    initialColumn = 6;
+    initialColumn = 6;                                  //copying board data into d[][], and initializing row and column
 
 
     QPixmap image("tom.png");
     image= image.scaledToWidth(50);
     image = image.scaledToHeight(50);
-    setPixmap(image);
+    setPixmap(image);                                   //setting picture of tom
     setPos(50 + 50 * initialRow, 50 + 50 * initialColumn);
     row = initialRow;
     column = initialColumn;
@@ -25,7 +25,9 @@ tom::tom(int d[13][13])
 void tom::chase()
 {
     int randomdirection;
-    randomdirection = rand()%4;
+    randomdirection = rand()%4;                         //generating random number between 0 and 3 (inclusive)
+                                                        //and changing direction according to number generated
+
     if (randomdirection == 0 && data[row - 1][column] != -1 && data[row - 1][column] != 53)
     {
         row--;
@@ -39,7 +41,7 @@ void tom::chase()
         column++;
         QPixmap image("tom.png");
         image = image.scaledToWidth(55);
-        image = image.scaledToHeight(55);
+        image = image.scaledToHeight(55);               //flipping image with direction change
         QPixmap reflectedimage = image.transformed(QTransform().scale(-1, 1));
         setPixmap(reflectedimage);
     }
@@ -50,6 +52,8 @@ void tom::chase()
         image = image.scaledToWidth(55);
         image = image.scaledToHeight(55);
         setPixmap(image);
-    }
-    setPos(50 + 50 * column, 50 + 50 * row);
+    }                                                   //numbers 53, 24, 36, and 40 chosen according to board
+                                                        //data to not allow tom to enter home
+
+    setPos(50 + 50 * column, 50 + 50 * row);            //setting position accordingly
 }

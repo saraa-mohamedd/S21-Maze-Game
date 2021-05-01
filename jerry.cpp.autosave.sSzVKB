@@ -18,7 +18,7 @@ Jerry::Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s
     QFont* f = new QFont;
     f->setPointSize(15);                                       //initializing QFont to be used for
     f->setBold(true);                                          //display of lives and mode on screen
-
+    
     livescounter();                                            //calling function that manages text of livesOnScreen
     livesOnScreen.setDefaultTextColor(QColor(255, 255, 0, 225));
     livesOnScreen.setX(50);
@@ -181,7 +181,7 @@ void Jerry::move()
         else if (typeid(*(items[i])) == typeid(tom))
         {
             Tom=items[i];
-            tomCollision();                                  //collision with tom called and tom saved to Tom variable
+            tomCollision();                                  //collision with tom called and tom saved to Tom variable   
         }
     }
 
@@ -274,28 +274,28 @@ void Jerry::pelletCollision(QGraphicsItem* p)
     modeOnScreen.setPlainText("MODE: INVINCIBLE");          //changes text on screen to become invincible
     invincibleMode = true;                                  // and sets invincibleMode to be true
     timer.connect(&timer, SIGNAL(timeout()), this, SLOT(pelletCollisionOver()));
-}                                                           //starts timer for invincible mode duration
+}
 
 void Jerry::pelletCollisionOver()
 {
-    invincibleMode = false;                                 //sets invincibleMode back to false
+    invincibleMode = false;
     if(holdingCheese)
     {
         QPixmap image("jerry cheese.png");
         image = image.scaledToWidth(45);
-        image = image.scaledToHeight(45);                   //adjusts pic back to original
-        setPixmap(image);                                   //(not inivincible mode)
+        image = image.scaledToHeight(45);
+        setPixmap(image);
     }
     else
     {
         QPixmap image("jerry.png");
         image = image.scaledToWidth(45);
-        image = image.scaledToHeight(45);                   //adjusts pic back
-        setPixmap(image);                                   //to original
+        image = image.scaledToHeight(45);
+        setPixmap(image);
     }
     modeOnScreen.setX(520);
     modeOnScreen.setTextWidth(178);
-    modeOnScreen.setPlainText("MODE: REGULAR");             //sets text back to say regular mode
+    modeOnScreen.setPlainText("MODE: REGULAR");
 
     return;
 }
@@ -303,7 +303,7 @@ void Jerry::pelletCollisionOver()
 void Jerry::livescounter()
 {
     if (lives==3)
-    livesOnScreen.setPlainText("LIVES: 3");                 //adjusts livesOnScreen depending on lives remaining
+    livesOnScreen.setPlainText("LIVES: 3");
     else if(lives==2)
     livesOnScreen.setPlainText("LIVES: 2");
     else if(lives==1)
@@ -311,7 +311,8 @@ void Jerry::livescounter()
     else if(lives==0)
     {
         livesOnScreen.setPlainText("LIVES: 0");
-        gameover();                                         //calls gameover when zero lives remain
+        gameover();
+    //end game + game over screen
     }
 }
 
@@ -319,20 +320,22 @@ void Jerry::tomCollision()
 {
     if(!invincibleMode)
     {
+        //return jerry to home
+        // Set Position
         row = 6;
-        column = 6;                                         //sets row and column back to original (6 and 6)
-        direction = ' ';                                    //and makes him stay still
-        setPos(50 + 50 * row, 50 + 50 * column);            //sets jerry position back to center of board
-        lives--;                                            //and decreases his lives by one
-        livescounter();                                     //calling livescounter to manage display
+        column = 6;
+        direction = ' ';
+        setPos(50 + 50 * row, 50 + 50 * column);
+        lives--;
+        livescounter();
         if(holdingCheese)
         {
-            scene()->addItem(currentcheese);                //if holding cheese when caught, returns it back
+            scene()->addItem(currentcheese);
             currentcheese = NULL;
-            holdingCheese = false;                          //and sets conditions to no cheese in hand
+            holdingCheese = false;
             QPixmap image("jerry.png");
-            image = image.scaledToWidth(45);                //returns pic to original
-            image = image.scaledToHeight(45);               //(not holding cheese)
+            image = image.scaledToWidth(45);
+            image = image.scaledToHeight(45);
             setPixmap(image);
         }
 
