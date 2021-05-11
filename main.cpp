@@ -46,13 +46,13 @@ int main(int argc, char *argv[])
             // Set Image
             if (boardData[i][j] == -1)
                 boardImages[i][j].setPixmap(wallImage);
-            else if (boardData[i][j] == 37)
+            else if (boardData[i][j] == 36)
                 boardImages[i][j].setPixmap(rug1);
-            else if (boardData[i][j] == 38)
+            else if (boardData[i][j] == 37)
                 boardImages[i][j].setPixmap(rug2);
-            else if (boardData[i][j] == 39)
+            else if (boardData[i][j] == 38)
                 boardImages[i][j].setPixmap(rug3);
-            else if (boardData[i][j] == 28 || boardData[i][j] == 45 || boardData[i][j] == 47 ||  boardData[i][j] == 30)
+            else if (boardData[i][j] == 27 || boardData[i][j] == 44 || boardData[i][j] == 46 ||  boardData[i][j] == 29)
                 boardImages[i][j].setPixmap(plate);
             else
                 boardImages[i][j].setPixmap(floorImage);

@@ -13,6 +13,7 @@ class tom : public QObject, public QGraphicsPixmapItem
 private:
     int row, column;
     int data[13][13];
+    int adjm[76][76];
 public:
     tom(int d[13][13]);
 public slots:
