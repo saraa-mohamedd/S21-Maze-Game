@@ -1,9 +1,10 @@
 #include "tom.h"
 
-tom::tom(int d[13][13])
+tom::tom(int d[13][13],Jerry *j)
 {
     int initialRow;
     int initialColumn;
+
     for (int i = 0; i < 13; i++)
         {
         for (int j = 0; j < 13; j++)
@@ -60,18 +61,24 @@ tom::tom(int d[13][13])
 
 void tom::chase()
 {
-/*    int randomdirection;
-    randomdirection = rand()%4;     */                    //generating random number between 0 and 3 (inclusive)
+    jerryrow=j->getRow();
+    jerrycolumn=j->getColumn();
 
-    tomnode=data[row][column];                                                   //and changing direction according to number generated
+/*    int
+ *    randomdirection;
+    randomdirection = rand()%4;     */                    //generating random number between 0 and 3 (inclusive)
+                                               //and changing direction according to number generated
     // where jerry is rn - row, column
-    // where tom is rn - row, column
+    // where tom is rn - row, column  
+    jerrynode=data[jerryrow][jerrycolumn];
+    tomnode=data[row][column];
     // int tomnode = data[row][column];
 
     // na5odhom bel node number
+     // sends to dijkstra the two locations
+    Dijkstra(adjm, tomnode,jerrynode);
 
-    // sends to dijkstra the two locations
-    // takes from dijstra the shortest path
+    // takes from dikjstra the shortest path
 
 
     // takes that shortest path and sends it to function
