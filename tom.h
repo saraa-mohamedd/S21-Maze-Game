@@ -23,15 +23,9 @@ private:
     int tomnode;
     int jerrynode;
     Jerry* j;
-
-
-
-
-
 public:
-
-    tom(int d[13][13],Jerry *j);
-    vector<vector<int>> Dijkstra(int Graph[COUNT][COUNT],int tnode,int jnode);
+    tom(int d[13][13],Jerry *jry);
+    vector<int> Dijkstra(int Graph[COUNT][COUNT],int tnode,int jnode);
 public slots:
     void chase();
 

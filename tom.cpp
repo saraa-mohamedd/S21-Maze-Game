@@ -1,6 +1,6 @@
 #include "tom.h"
 
-tom::tom(int d[13][13],Jerry *j)
+tom::tom(int d[13][13],Jerry *jry)
 {
     int initialRow;
     int initialColumn;
@@ -12,6 +12,7 @@ tom::tom(int d[13][13],Jerry *j)
          }
     initialRow = 11;
     initialColumn = 6;                                  //copying board data into d[][], and initializing row and column
+    j = jry;
 
     QPixmap image("tom.png");
     image= image.scaledToWidth(50);
@@ -22,39 +23,39 @@ tom::tom(int d[13][13],Jerry *j)
     column = initialColumn;
 
     for (int i = 0; i < 76; i++)
+    {
+        for (int j = 0; j < 76; j++)
         {
-            for (int j = 0; j < 76; j++)
+            adjm[i][j] = 0;
+        }
+    }
+
+    for (int i = 0; i < 13; i++)
+    {
+        for (int j = 0; j < 13; j++)
+        {
+            int node = d[i][j];
+            if (node != -1 && node != 23 && node != 35 && node != 39 && node != 52)
             {
-                adjm[i][j] = 0;
+                if (i != 0 && d[i-1][j] != -1 && d[i-1][j] != 23 && d[i-1][j] != 35 && d[i-1][j] != 39 && d[i-1][j] != 52)
+                {
+                    adjm[node][d[i - 1][j]] = 1;
+                }
+                if (j != 13 && d[i][j+1] != -1 && d[i][j+1] != 23 && d[i][j+1] != 35 && d[i][j+1] != 39 && d[i][j+1] != 52)
+                {
+                    adjm[node][d[i][j + 1]] = 1;
+                }
+                if (i != 13 && d[i+1][j] != -1 && d[i+1][j] != 23 && d[i+1][j] != 35 && d[i+1][j] != 39 && d[i+1][j] != 52)
+                {
+                    adjm[node][d[i + 1][j]] = 1;
+                }
+                if (j != 0 && d[i][j-1] != -1 && d[i][j-1] != 23 && d[i][j-1] != 35 && d[i][j-1] != 39 && d[i][j-1] != 52)
+                {
+                    adjm[node][d[i][j-1]] = 1;
+                }
             }
         }
-
-     for (int i = 0; i < 13; i++)
-     {
-         for (int j = 0; j < 13; j++)
-         {
-             int node = d[i][j];
-             if (node != -1)
-             {
-                 if (i != 0 && d[i - 1][j] != -1)
-                 {
-                     adjm[node][d[i - 1][j]] = 1;
-                 }
-                 if (j != 13 && d[i][j + 1] != -1)
-                 {
-                     adjm[node][d[i][j + 1]] = 1;
-                 }
-                 if (i != 13 && d[i + 1][j] != -1)
-                 {
-                     adjm[node][d[i + 1][j]] = 1;
-                 }
-                 if (j != 0 && d[i][j-1] != -1)
-                 {
-                     adjm[node][d[i][j-1]] = 1;
-                 }
-             }
-         }
-     }
+    }
 
 
 }
@@ -65,7 +66,7 @@ void tom::chase()
     jerrycolumn=j->getColumn();
 
 /*    int
- *    randomdirection;
+    randomdirection;
     randomdirection = rand()%4;     */                    //generating random number between 0 and 3 (inclusive)
                                                //and changing direction according to number generated
     // where jerry is rn - row, column
@@ -130,7 +131,7 @@ void tom::chase()
     //row++
 // setPos(50 + 50 * column, 50 + 50 * row);
 
-vector<vector<int>> Dijkstra(int Graph[COUNT][COUNT], int tnode,int jnode)
+vector<int> Dijkstra(int Graph[COUNT][COUNT], int tnode,int jnode)
 {
     int temp[COUNT][COUNT];
     for (int i = 0; i < COUNT; i++)
@@ -210,6 +211,6 @@ vector<vector<int>> Dijkstra(int Graph[COUNT][COUNT], int tnode,int jnode)
             } while (j != tnode);
         }
     }
-    return paths;
+    return paths[jnode];
 }
 
