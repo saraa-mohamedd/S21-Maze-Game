@@ -60,9 +60,10 @@ tom::tom(int d[13][13])
 
 void tom::chase()
 {
-    int randomdirection;
-    randomdirection = rand()%4;                         //generating random number between 0 and 3 (inclusive)
-                                                        //and changing direction according to number generated
+/*    int randomdirection;
+    randomdirection = rand()%4;     */                    //generating random number between 0 and 3 (inclusive)
+
+    tomnode=data[row][column];                                                   //and changing direction according to number generated
     // where jerry is rn - row, column
     // where tom is rn - row, column
     // int tomnode = data[row][column];
@@ -122,6 +123,86 @@ void tom::chase()
     //row++
 // setPos(50 + 50 * column, 50 + 50 * row);
 
+vector<vector<int>> Dijkstra(int Graph[COUNT][COUNT], int tnode,int jnode)
+{
+    int temp[COUNT][COUNT];
+    for (int i = 0; i < COUNT; i++)
+    {
+        for (int j = 0; j < COUNT; j++)
+        {
+            if (Graph[i][j] == 0)
+                temp[i][j] = INFINITE;
+            else
+                temp[i][j] = Graph[i][j];
+        }
+    }
+    bool visited[COUNT];
+    int previous[COUNT];
+    float cost[COUNT];
+    // 1st Row:
+    for (int i = 0; i < COUNT; i++)
+    {
+        if (i == tnode)
+        {
+            previous[i] = -1;
+            cost[i] = 0;
+            visited[i] = true;
+        }
+        else
+        {
+            previous[i] = tnode;
+            cost[i] = temp[tnode][i];
+            visited[i] = false;
+        }
+    }
+    // All Rows:
+    int count = 1;
+    while (count < COUNT)
+    {
+        // Determine which vertex to visit.
+        int minimum = INFINITE, visitedVertex;
+        for (int i = 0; i < COUNT; i++)
+        {
+            if (visited[i] == false && cost[i] < minimum)
+            {
+                minimum = cost[i];
+                visitedVertex = i;
+            }
+        }
+        // Visit the vertex.
+        visited[visitedVertex] = true;
 
-
+        // Check whether there are shorter paths.
+        for (int i = 0; i < COUNT; i++)
+        {
+            if (visited[i] == false)
+            {
+                if ((cost[visitedVertex] + temp[visitedVertex][i]) < cost[i])
+                {
+                    previous[i] = visitedVertex;
+                    cost[i] = (cost[visitedVertex] + temp[visitedVertex][i]);
+                }
+            }
+        }
+        count++;
+    }
+    // Extract the paths.
+    vector<vector<int>> paths;
+    paths.resize(COUNT);
+    int j;
+    for (int i = 0; i < COUNT; i++)
+    {
+        paths[i].push_back(i);
+        if (i != tnode)
+        {
+            j = i;
+            do
+            {
+                j = previous[j];
+                paths[i].insert(paths[i].begin(), j);
+            } while (j != tnode);
+        }
+    }
+    return paths;
+}
 
