@@ -63,7 +63,22 @@ void tom::chase()
     int randomdirection;
     randomdirection = rand()%4;                         //generating random number between 0 and 3 (inclusive)
                                                         //and changing direction according to number generated
+    // where jerry is rn - row, column
+    // where tom is rn - row, column
+    // int tomnode = data[row][column];
 
+    // na5odhom bel node number
+
+    // sends to dijkstra the two locations
+    // takes from dijstra the shortest path
+
+
+    // takes that shortest path and sends it to function
+
+    // that function moves tom along the path
+
+
+    /*
     if (randomdirection == 0 && data[row - 1][column] != -1 && data[row - 1][column] != 52)
     {
         row--;
@@ -92,4 +107,21 @@ void tom::chase()
                                                         //data to not allow tom to enter home
 
     setPos(50 + 50 * column, 50 + 50 * row);            //setting position accordingly
+
+    */
 }
+
+// (3 10 14 15 16)
+
+// node tom, row, column
+// nextnode popped
+
+// data[row-1][column] == nextnode
+    // row--;
+// data[row+1][column] == nextnode
+    //row++
+// setPos(50 + 50 * column, 50 + 50 * row);
+
+
+
+
