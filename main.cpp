@@ -89,8 +89,8 @@ int main(int argc, char *argv[])
     timer.connect(&timer, SIGNAL(timeout()), &j, SLOT(move()));
 
     QTimer ttimer;
-    ttimer.start(50000);                             //adjusting and starting timer for tom's motion
-    ttimer.connect(&timer, SIGNAL(timeout()), &t, SLOT(chase()));
+    ttimer.start(400);                             //adjusting and starting timer for tom's motion
+    ttimer.connect(&ttimer, SIGNAL(timeout()), &t, SLOT(chase()));
     view.setScene(&scene);
     view.show();
 

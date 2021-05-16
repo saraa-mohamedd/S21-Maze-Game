@@ -32,21 +32,21 @@ tom::tom(int d[13][13], Jerry* jry)
         for (int j = 0; j < 13; j++)
         {
             int node = d[i][j];
-            if (node != -1)
+            if (node != -1 && node != 23 && node != 35 && node != 39 && node != 52)
             {
-                if (i != 0 && d[i-1][j] != -1)
+                if (i != 0 && d[i-1][j] != -1 && d[i-1][j] != 23 && d[i-1][j] != 35 && d[i-1][j] != 39 && d[i-1][j] != 52)
                 {
                     adjm[node][d[i - 1][j]] = 1;
                 }
-                if (j != 13 && d[i][j+1] != -1)
+                if (j != 13 && d[i][j+1] != -1 && d[i][j+1] != 23 && d[i][j+1] != 35 && d[i][j+1] != 39 && d[i][j+1] != 52)
                 {
                     adjm[node][d[i][j + 1]] = 1;
                 }
-                if (i != 13 && d[i+1][j] != -1)
+                if (i != 13 && d[i+1][j] != -1 && d[i+1][j] != 23 && d[i+1][j] != 35 && d[i+1][j] != 39 && d[i+1][j] != 52)
                 {
                     adjm[node][d[i + 1][j]] = 1;
                 }
-                if (j != 0 && d[i][j-1] != -1)
+                if (j != 0 && d[i][j-1] != -1 && d[i][j-1] != 23 && d[i][j-1] != 35 && d[i][j-1] != 39 && d[i][j-1] != 52)
                 {
                     adjm[node][d[i][j-1]] = 1;
                 }
@@ -66,46 +66,47 @@ void tom::chase()
     randomdirection;
     randomdirection = rand()%4;     */                    //generating random number between 0 and 3 (inclusive)
                                                //and changing direction according to number generated
-
     jerrynode=data[jerryrow][jerrycolumn];
     tomnode=data[row][column];
-
-    // sends to dijkstra the two locations
-    vector<int> path = Dijkstra(adjm, tomnode, jerrynode);
-
-    if (path.size() != 1)
+    if (jerrynode != 27 && jerrynode != 28 && jerrynode != 29 && jerrynode != 36 && jerrynode != 37 && jerrynode != 38 && jerrynode != 44 && jerrynode != 45 && jerrynode != 46)
     {
-        int motion = path.at(1); //take the first next location in path to move to
+        // sends to dijkstra the two locations
+        vector<int> path = Dijkstra(adjm, tomnode, jerrynode);
+
+        if (path.size() != 1)
+        {
+            int motion = path.at(1); //take the first next location in path to move to
 
 
-        //find out which direction tom should move to reach this location
-        if (data[row - 1][column] == motion && data[row - 1][column] != -1 && data[row - 1][column] != 52)
-        {
-            row--;
-        }
-        else if (data[row + 1][column] == motion && data[row + 1][column] != -1 && data[row + 1][column] != 23)
-        {
-           row++;
-        }
-        else if (data[row][column+1] == motion && data[row][column+1] != -1 && data[row][column+1] != 35)
-        {
-            column++;
-            QPixmap image("tom.png");
-            image = image.scaledToWidth(55);
-            image = image.scaledToHeight(55);               //flipping image with direction change
-            QPixmap reflectedimage = image.transformed(QTransform().scale(-1, 1));
-            setPixmap(reflectedimage);
-        }
-        else if (data[row][column-1] == motion && data[row][column-1] != -1 && data[row][column-1] != 39)
-        {
-            column--;
-            QPixmap image("tom.png");
-            image = image.scaledToWidth(55);
-            image = image.scaledToHeight(55);
-            setPixmap(image);
-        }
+            //find out which direction tom should move to reach this location
+            if (data[row - 1][column] == motion && data[row - 1][column] != -1 && data[row - 1][column] != 52)
+            {
+                row--;
+            }
+            else if (data[row + 1][column] == motion && data[row + 1][column] != -1 && data[row + 1][column] != 23)
+            {
+               row++;
+            }
+            else if (data[row][column+1] == motion && data[row][column+1] != -1 && data[row][column+1] != 35)
+            {
+                column++;
+                QPixmap image("tom.png");
+                image = image.scaledToWidth(55);
+                image = image.scaledToHeight(55);               //flipping image with direction change
+                QPixmap reflectedimage = image.transformed(QTransform().scale(-1, 1));
+                setPixmap(reflectedimage);
+            }
+            else if (data[row][column-1] == motion && data[row][column-1] != -1 && data[row][column-1] != 39)
+            {
+                column--;
+                QPixmap image("tom.png");
+                image = image.scaledToWidth(55);
+                image = image.scaledToHeight(55);
+                setPixmap(image);
+            }
 
-        setPos(50 + 50 * column, 50 + 50 * row);
+            setPos(50 + 50 * column, 50 + 50 * row);
+        }
     }
 
 }
@@ -124,6 +125,7 @@ vector<int> tom::Dijkstra(int Graph[COUNT][COUNT], int tnode,int jnode)
                 temp[i][j] = Graph[i][j];
         }
     }
+
     bool visited[COUNT];
     int previous[COUNT];
     float cost[COUNT];
