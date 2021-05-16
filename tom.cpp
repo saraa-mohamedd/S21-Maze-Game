@@ -1,18 +1,15 @@
 #include "tom.h"
 
-tom::tom(int d[13][13],Jerry *jry)
+tom::tom(int d[13][13], Jerry* jry)
 {
-    int initialRow;
-    int initialColumn;
-
     for (int i = 0; i < 13; i++)
-        {
+    {
         for (int j = 0; j < 13; j++)
-            data[i][j] = d[i][j];
-         }
-    initialRow = 11;
-    initialColumn = 6;                                  //copying board data into d[][], and initializing row and column
-    j = jry;
+        data[i][j] = d[i][j];
+    }
+    int initialRow = 11;
+    int initialColumn = 6;                                  //copying board data into d[][], and initializing row and column
+    j1 = jry;
 
     QPixmap image("tom.png");
     image= image.scaledToWidth(50);
@@ -35,21 +32,21 @@ tom::tom(int d[13][13],Jerry *jry)
         for (int j = 0; j < 13; j++)
         {
             int node = d[i][j];
-            if (node != -1 && node != 23 && node != 35 && node != 39 && node != 52)
+            if (node != -1)
             {
-                if (i != 0 && d[i-1][j] != -1 && d[i-1][j] != 23 && d[i-1][j] != 35 && d[i-1][j] != 39 && d[i-1][j] != 52)
+                if (i != 0 && d[i-1][j] != -1)
                 {
                     adjm[node][d[i - 1][j]] = 1;
                 }
-                if (j != 13 && d[i][j+1] != -1 && d[i][j+1] != 23 && d[i][j+1] != 35 && d[i][j+1] != 39 && d[i][j+1] != 52)
+                if (j != 13 && d[i][j+1] != -1)
                 {
                     adjm[node][d[i][j + 1]] = 1;
                 }
-                if (i != 13 && d[i+1][j] != -1 && d[i+1][j] != 23 && d[i+1][j] != 35 && d[i+1][j] != 39 && d[i+1][j] != 52)
+                if (i != 13 && d[i+1][j] != -1)
                 {
                     adjm[node][d[i + 1][j]] = 1;
                 }
-                if (j != 0 && d[i][j-1] != -1 && d[i][j-1] != 23 && d[i][j-1] != 35 && d[i][j-1] != 39 && d[i][j-1] != 52)
+                if (j != 0 && d[i][j-1] != -1)
                 {
                     adjm[node][d[i][j-1]] = 1;
                 }
@@ -62,76 +59,59 @@ tom::tom(int d[13][13],Jerry *jry)
 
 void tom::chase()
 {
-    jerryrow=j->getRow();
-    jerrycolumn=j->getColumn();
+    jerryrow=j1->getRow();
+    jerrycolumn=j1->getColumn();
 
 /*    int
     randomdirection;
     randomdirection = rand()%4;     */                    //generating random number between 0 and 3 (inclusive)
                                                //and changing direction according to number generated
-    // where jerry is rn - row, column
-    // where tom is rn - row, column  
+
     jerrynode=data[jerryrow][jerrycolumn];
     tomnode=data[row][column];
-    // int tomnode = data[row][column];
 
-    // na5odhom bel node number
-     // sends to dijkstra the two locations
-    Dijkstra(adjm, tomnode,jerrynode);
+    // sends to dijkstra the two locations
+    vector<int> path = Dijkstra(adjm, tomnode, jerrynode);
 
-    // takes from dikjstra the shortest path
-
-
-    // takes that shortest path and sends it to function
-
-    // that function moves tom along the path
-
-
-    /*
-    if (randomdirection == 0 && data[row - 1][column] != -1 && data[row - 1][column] != 52)
+    if (path.size() != 1)
     {
-        row--;
+        int motion = path.at(1); //take the first next location in path to move to
+
+
+        //find out which direction tom should move to reach this location
+        if (data[row - 1][column] == motion && data[row - 1][column] != -1 && data[row - 1][column] != 52)
+        {
+            row--;
+        }
+        else if (data[row + 1][column] == motion && data[row + 1][column] != -1 && data[row + 1][column] != 23)
+        {
+           row++;
+        }
+        else if (data[row][column+1] == motion && data[row][column+1] != -1 && data[row][column+1] != 35)
+        {
+            column++;
+            QPixmap image("tom.png");
+            image = image.scaledToWidth(55);
+            image = image.scaledToHeight(55);               //flipping image with direction change
+            QPixmap reflectedimage = image.transformed(QTransform().scale(-1, 1));
+            setPixmap(reflectedimage);
+        }
+        else if (data[row][column-1] == motion && data[row][column-1] != -1 && data[row][column-1] != 39)
+        {
+            column--;
+            QPixmap image("tom.png");
+            image = image.scaledToWidth(55);
+            image = image.scaledToHeight(55);
+            setPixmap(image);
+        }
+
+        setPos(50 + 50 * column, 50 + 50 * row);
     }
-    else if (randomdirection == 1 && data[row + 1][column] != -1 && data[row + 1][column] != 23)
-    {
-        row++;
-    }
-    else if (randomdirection == 2 && data[row][column + 1] != -1 && data[row][column + 1] != 35)
-    {
-        column++;
-        QPixmap image("tom.png");
-        image = image.scaledToWidth(55);
-        image = image.scaledToHeight(55);               //flipping image with direction change
-        QPixmap reflectedimage = image.transformed(QTransform().scale(-1, 1));
-        setPixmap(reflectedimage);
-    }
-    else if (randomdirection == 3 && data[row][column - 1] != -1 && data[row][column - 1] != 39)
-    {
-        column--;
-        QPixmap image("tom.png");
-        image = image.scaledToWidth(55);
-        image = image.scaledToHeight(55);
-        setPixmap(image);
-    }                                                   //numbers 53, 24, 36, and 40 chosen according to board
-                                                        //data to not allow tom to enter home
 
-    setPos(50 + 50 * column, 50 + 50 * row);            //setting position accordingly
-
-    */
 }
 
-// (3 10 14 15 16)
 
-// node tom, row, column
-// nextnode popped
-
-// data[row-1][column] == nextnode
-    // row--;
-// data[row+1][column] == nextnode
-    //row++
-// setPos(50 + 50 * column, 50 + 50 * row);
-
-vector<int> Dijkstra(int Graph[COUNT][COUNT], int tnode,int jnode)
+vector<int> tom::Dijkstra(int Graph[COUNT][COUNT], int tnode,int jnode)
 {
     int temp[COUNT][COUNT];
     for (int i = 0; i < COUNT; i++)
@@ -212,5 +192,11 @@ vector<int> Dijkstra(int Graph[COUNT][COUNT], int tnode,int jnode)
         }
     }
     return paths[jnode];
+}
+
+void tom:: jerrypos(int jrow, int jcol)
+{
+    jerryrow = jrow;
+    jerrycolumn = jcol;
 }
 

@@ -10,8 +10,8 @@
 #include <QTimerEvent>
 #include <QGraphicsTextItem>
 #include "cheese.h"
-#include "pellets.h"
 #include "tom.h"
+#include "pellets.h"
 
 class Jerry : public QObject, public QGraphicsPixmapItem
 {

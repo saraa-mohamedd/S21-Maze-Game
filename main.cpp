@@ -78,9 +78,9 @@ int main(int argc, char *argv[])
     scene.addItem(&p2);                             //in chosen positions
 
     Jerry j(6,6,boardData, &scene);
-    tom t(boardData);
     scene.addItem(&j);
-    scene.addItem(&t);                              //adding jerry and tom to scene
+    tom t(boardData, &j);
+    scene.addItem(&t);                                //adding jerry and tom to scene
 
     j.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     j.setFocus();
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     timer.connect(&timer, SIGNAL(timeout()), &j, SLOT(move()));
 
     QTimer ttimer;
-    ttimer.start(8000);                             //adjusting and starting timer for tom's motion
+    ttimer.start(50000);                             //adjusting and starting timer for tom's motion
     ttimer.connect(&timer, SIGNAL(timeout()), &t, SLOT(chase()));
     view.setScene(&scene);
     view.show();
