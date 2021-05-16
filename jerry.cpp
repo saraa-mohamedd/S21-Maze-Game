@@ -1,5 +1,6 @@
 #include "jerry.h"
 #include <QDebug>
+
 Jerry::Jerry(int initialRow, int initialColumn, int d[13][13], QGraphicsScene* s)
 {
     for (int i = 0; i < 13; i++)
@@ -175,8 +176,12 @@ void Jerry::move()
         else if (typeid(*(items[i])) == typeid(Pellets))
         {
             if (!invincibleMode)
-            pelletCollision(items[i]);                       //carrying out pelletCollision if mode isn't already
-                                                             //invincible and collision with pellet occurs
+            {
+                QSound::play("powerup.wav");
+                pelletCollision(items[i]);                       //carrying out pelletCollision if mode isn't already
+                                                                 //invincible and collision with pellet occurs
+            }
+
         }
         else if (typeid(*(items[i])) == typeid(tom))
         {
@@ -199,6 +204,7 @@ void Jerry::cheeseCollision(QGraphicsItem* c)
        return;
      else
      {
+       QSound::play("cheese.wav");
        holdingCheese = true;
        currentcheese = c;
        scene()->removeItem(c);                              //adjusts variables to hold cheese
@@ -319,6 +325,8 @@ void Jerry::tomCollision()
 {
     if(!invincibleMode)
     {
+        QSound::play("caught.wav");
+
         row = 6;
         column = 6;                                         //sets row and column back to original (6 and 6)
         direction = ' ';                                    //and makes him stay still
@@ -358,6 +366,8 @@ void Jerry::gameover()
     image->setScale(0.17);
     image->setPos(135,135);                                     //adds gameover pic
     scene()->addItem(image);
+
+    QSound::play("gameover.wav");
 }
 void Jerry::victory()
 {
@@ -379,4 +389,6 @@ void Jerry::victory()
     image->setScale(0.17);
     image->setPos(300,135);
     scene()->addItem(image);                                      //adds victory pic
+
+    QSound::play("win.wav");
 }

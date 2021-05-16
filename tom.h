@@ -26,7 +26,6 @@ private:
 public:
     tom(int d[13][13], class Jerry* jry);
     vector<int> Dijkstra(int Graph[COUNT][COUNT],int tnode,int jnode);
-    void jerrypos(int jrow, int jcolmn);
 public slots:
     void chase();
 };

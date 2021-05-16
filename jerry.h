@@ -12,6 +12,7 @@
 #include "cheese.h"
 #include "tom.h"
 #include "pellets.h"
+#include <QSound>
 
 class Jerry : public QObject, public QGraphicsPixmapItem
 {

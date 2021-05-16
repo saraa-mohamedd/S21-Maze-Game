@@ -9,13 +9,13 @@ tom::tom(int d[13][13], Jerry* jry)
     }
     int initialRow = 11;
     int initialColumn = 6;                                  //copying board data into d[][], and initializing row and column
+    setPos(50 + 28 * initialRow, 50 + 90 * initialColumn);
     j1 = jry;
 
     QPixmap image("tom.png");
     image= image.scaledToWidth(50);
     image = image.scaledToHeight(50);
     setPixmap(image);                                   //setting picture of tom
-    setPos(50 + 50 * initialRow, 50 + 50 * initialColumn);
     row = initialRow;
     column = initialColumn;
 
@@ -51,7 +51,8 @@ tom::tom(int d[13][13], Jerry* jry)
                     adjm[node][d[i][j-1]] = 1;
                 }
             }
-        }
+        }                                                               // making adjacency matrix, making doors of home
+                                                                        // inaccessible to tom (from both row & column)
     }
 
 
@@ -62,14 +63,12 @@ void tom::chase()
     jerryrow=j1->getRow();
     jerrycolumn=j1->getColumn();
 
-/*    int
-    randomdirection;
-    randomdirection = rand()%4;     */                    //generating random number between 0 and 3 (inclusive)
-                                               //and changing direction according to number generated
     jerrynode=data[jerryrow][jerrycolumn];
     tomnode=data[row][column];
+
     if (jerrynode != 27 && jerrynode != 28 && jerrynode != 29 && jerrynode != 36 && jerrynode != 37 && jerrynode != 38 && jerrynode != 44 && jerrynode != 45 && jerrynode != 46)
     {
+        // checks that the location jerry is in is not inside home, if inside home, tom does not move. otherwise,
         // sends to dijkstra the two locations
         vector<int> path = Dijkstra(adjm, tomnode, jerrynode);
 
@@ -104,10 +103,10 @@ void tom::chase()
                 image = image.scaledToHeight(55);
                 setPixmap(image);
             }
-
-            setPos(50 + 50 * column, 50 + 50 * row);
         }
     }
+
+    setPos(50 + 50 * column, 50 + 50 * row);
 
 }
 
@@ -194,11 +193,5 @@ vector<int> tom::Dijkstra(int Graph[COUNT][COUNT], int tnode,int jnode)
         }
     }
     return paths[jnode];
-}
-
-void tom:: jerrypos(int jrow, int jcol)
-{
-    jerryrow = jrow;
-    jerrycolumn = jcol;
 }
 
